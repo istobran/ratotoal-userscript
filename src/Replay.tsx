@@ -99,7 +99,6 @@ export function Replay(props: ThreadAttachment) {
     jsonRequest('find/replay/by_ratotal_aid', { aid: props.aid })
       .then(resp => setData(resp));
   }, []);
-
   return (
     <StyledReplay>
       <Title>{pureFilename}（{props.filesize}）</Title>

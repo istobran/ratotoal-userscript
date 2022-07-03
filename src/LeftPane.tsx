@@ -70,6 +70,7 @@ const Button = styled.button`
 
 export function LeftPane(props: LeftPaneProps) {
   // TODO：处理地图预览图
+  // TODO：评分
   return (
     <Border color="#bc0d00" width="2px">
       <LeftInfoContainer>

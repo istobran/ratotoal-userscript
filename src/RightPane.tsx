@@ -39,6 +39,7 @@ function MatchInfoPane(props: Resp) {
   const version = (props.gameVersion || '').split('.').slice(0, 2).join('.');
   const modInfo = props.modInfo === 'RA3' ? '原版' : props.modInfo;
   const durationText = `${Math.floor(props.duration / 60)} 分 ${props.duration % 60} 秒`;
+  // TODO：https://ratotal.org/?thread-1908.htm 录像人可能不对，应该不是 post Commentator
   return (
     <StyledMatchInfoPane>
       <div className="info-item">

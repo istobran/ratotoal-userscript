@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "lib": ["dom"],
         "noImplicitAny": false,
         "noEmitOnError": true,
         "removeComments": false,

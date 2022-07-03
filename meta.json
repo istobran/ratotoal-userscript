@@ -1,6 +1,6 @@
 {
-    "namespace": "github.com/cvzi",
-    "copyright": "2020, cuzi (https://openuserjs.org/users/cuzi)",
+    "namespace": "github.com/istobran",
+    "copyright": "2022, BangZ (https://openuserjs.org/users/BangZ)",
     "require": [
         "https://unpkg.com/react@18/umd/react.development.js",
         "https://unpkg.com/react-dom@18/umd/react-dom.development.js"

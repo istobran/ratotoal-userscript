@@ -5,6 +5,7 @@ import { AttachmentPanel } from './AttachmentPanel';
 const attachlists = document.querySelectorAll('.attachlist');
 
 Array.from(attachlists).forEach(attachListNode => {
+  // TODO：筛选出 ra3replay
   const fieldset = attachListNode.parentNode as HTMLFieldSetElement;
   const messageNode = fieldset?.parentNode as HTMLDivElement;
   messageNode?.querySelector('script')?.remove();
@@ -14,9 +15,12 @@ Array.from(attachlists).forEach(attachListNode => {
   const originalData = Array.from(liNodes).map(liNode => {
     const aid = Number(liNode.getAttribute('aid'));
     const filename = liNode.querySelector('a')?.innerText.trim();
-    const [, filesize, downloadTimes] = /大小：(.*?)，下载次数：(.*?)\)/gi.exec('(大小：237.26K，下载次数：168)');
+    const [, filesize, downloadTimes] = /大小：(.*?)，下载次数：(.*?)\)/gi
+      .exec(liNode.querySelector('span')?.innerText.trim());
     return { aid, filename, filesize, downloadTimes: Number(downloadTimes) };
   });
   fieldset.remove();
-  render(<AttachmentPanel attachments={originalData} /> as any, messageNode);
+  const el = document.createElement('div');
+  messageNode.appendChild(el)
+  render(<AttachmentPanel attachments={originalData} />, el);
 });

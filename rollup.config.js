@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import typescriptPlugin from '@rollup/plugin-typescript'
+import image from '@rollup/plugin-image';
 import typescript from 'typescript'
 import metablock from 'rollup-plugin-userscript-metablock'
 
@@ -32,6 +33,7 @@ export default {
     }),
     nodeResolve({ extensions: ['.js', '.ts', '.tsx'] }),
     typescriptPlugin({ typescript }),
+    image(),
     commonjs({
       include: [
         'node_modules/**'
@@ -40,7 +42,10 @@ export default {
         'node_modules/process-es6/**'
       ]
     }),
-    babel({ babelHelpers: 'bundled' }),
+    babel({
+      babelHelpers: 'bundled',
+      plugins: ['@emotion']
+    }),
     metablock({
       file: './meta.json',
       override: {

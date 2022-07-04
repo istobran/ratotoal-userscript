@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Border, LinearBackground } from './Background';
 import * as React from 'react';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import banner from './assets/banner.png';
 import sunlight from './assets/sunlight.png';
 import { ThreadAttachment } from './AttachmentPanel';

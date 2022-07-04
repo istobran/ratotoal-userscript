@@ -10,6 +10,8 @@ import alliedRect from './assets/allied_rect.png';
 import sovietRect from './assets/soviet_rect.png';
 import empireRect from './assets/empire_rect.png';
 import randomRect from './assets/random_rect.png';
+import { ReactNode } from 'react';
+import { Loading } from './Loading';
 
 enum FactionType {
   Observer = 1,
@@ -39,7 +41,6 @@ function MatchInfoPane(props: Resp) {
   const version = (props.gameVersion || '').split('.').slice(0, 2).join('.');
   const modInfo = props.modInfo === 'RA3' ? '原版' : props.modInfo;
   const durationText = `${Math.floor(props.duration / 60)} 分 ${props.duration % 60} 秒`;
-  // TODO：https://ratotal.org/?thread-1908.htm 录像人可能不对，应该不是 post Commentator
   return (
     <StyledMatchInfoPane>
       <div className="info-item">
@@ -55,7 +56,9 @@ function MatchInfoPane(props: Resp) {
         <ShadowText>游戏时间：{dateTime(new Date(props.playAt).getTime())}</ShadowText>
       </div>
       <div className="info-item">
-        <ShadowText>录像人：{(props.players || [])[props.replaySaver]?.name || '未知'}</ShadowText>
+        <ShadowText>录像人：{(props.players || [])
+          .filter(p => !(p.name === 'post Commentator' && p.apm === null))
+          [props.replaySaver]?.name || '未知'}</ShadowText>
       </div>
       <div className="info-item">
         <ShadowText>参战玩家数：{props.numberOfPlayers}</ShadowText>
@@ -236,10 +239,10 @@ function PlayerInfoPane(props: { players: Player[] }) {
   )
 }
 
-const StyledRightPane = styled.div<{ invalid?: boolean }>`
+const StyledRightPane = styled.div<{ full?: boolean }>`
   flex: 1;
   margin-left: 20px;
-  ${props => props.invalid && `
+  ${props => props.full && `
     align-self: stretch;
     display: flex;
     align-items: center;
@@ -250,15 +253,19 @@ const StyledRightPane = styled.div<{ invalid?: boolean }>`
   `}
 `;
 
-export function RightPane(props: Resp) {
+export function RightPane(props: Resp & { loading?: boolean }) {
+  let displayContent: ReactNode;
+  if (props.loading) {
+    displayContent = <Loading loading={props.loading} />
+  } else if (props.invalid) {
+    displayContent = <ShadowText>录像解析失败</ShadowText>
+  } else {
+    displayContent = <>
+      <MatchInfoPane {...props} />
+      <PlayerInfoPane players={props.players} />
+    </>
+  }
   return (
-    <StyledRightPane invalid={props.invalid}>
-      {props.invalid
-        ? <ShadowText>录像解析失败</ShadowText>
-        : <>
-          <MatchInfoPane {...props} />
-          <PlayerInfoPane players={props.players}/>
-        </>}
-    </StyledRightPane>
+    <StyledRightPane full={props.invalid || props.loading}>{displayContent}</StyledRightPane>
   )
 }

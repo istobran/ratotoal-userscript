@@ -29,6 +29,7 @@ type LeftPaneProps = {
   mapName: string;
   imageUrl: string;
   downloadUrl: string;
+  loading?: boolean;
 }
 const MapName = styled.div`
   color: #f4b162;
@@ -78,8 +79,8 @@ export function LeftPane(props: LeftPaneProps) {
             ? <img
               className="img-content"
               src={props.imageUrl}
-              alt={props.mapName}/>
-            : <div className="img-content">暂无地图预览图</div>}
+              alt={props.mapName} />
+            : <div className="img-content">{props.loading ? '正在加载...' : '暂无地图预览图'}</div>}
           {props.mapName && <MapName>{props.mapName}</MapName>}
         </Border>
         <ActionContainer>

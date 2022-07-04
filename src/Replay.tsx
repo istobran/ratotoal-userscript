@@ -95,9 +95,12 @@ export type Resp = {
 export function Replay(props: ThreadAttachment) {
   const pureFilename = props.filename.replace(/\.ra3replay$/i, '');
   const [data, setData] = useState<Resp>(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     jsonRequest('find/replay/by_ratotal_aid', { aid: props.aid })
-      .then(resp => setData(resp));
+      .then(resp => setData(resp))
+      .finally(() => setLoading(false));
   }, []);
   return (
     <StyledReplay>
@@ -111,8 +114,8 @@ export function Replay(props: ThreadAttachment) {
                 start="rgba(172, 20, 24, .69)"
                 end="rgba(0, 0, 0, .69)"
                 direction="top right">
-                <LeftPane {...data} />
-                <RightPane {...data} />
+                <LeftPane {...data} loading={loading} />
+                <RightPane {...data} loading={loading} />
               </LinearBackground>
             </Border>
           </Border>

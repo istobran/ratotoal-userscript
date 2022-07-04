@@ -62,7 +62,6 @@ const StyledAttachmentPanel = styled.div`
 
 export function AttachmentPanel(props: Props) {
   // TODO：添加阳光射线背景
-  // TODO：处理加载中状态
   // TODO：处理查询失败
   return (
     <StyledAttachmentPanel>

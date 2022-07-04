@@ -31,7 +31,8 @@ const ReplayContentWrapper = styled.div`
   }
   .container {
     padding: 14px;
-    background: url(${sunlight}) no-repeat center / 100%  bottom;
+    background: url(${sunlight}) no-repeat center center;
+    background-size: cover;
     display: flex;
     justify-content: space-between;
     align-items: start;

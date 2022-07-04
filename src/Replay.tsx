@@ -10,16 +10,6 @@ import { LeftPane } from './LeftPane';
 import { RightPane } from './RightPane';
 import { useToggle } from 'react-use';
 
-export function ReplayBackground(props: { children?: ReactNode }) {
-  return (
-    <Border color="#000000" width="3px">
-      <Border color="#bc0d00" width="4px">
-        {props.children}
-      </Border>
-    </Border>
-  )
-}
-
 const Title = styled.div`
   background: url(${banner}) no-repeat left center;
   background-size: 100% 100%;

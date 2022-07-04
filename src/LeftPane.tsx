@@ -14,7 +14,6 @@ const LeftInfoContainer = styled.div`
     height: 240px!important;
     width: 240px;
     border: none;
-    background: red;
     margin: 4px;
     outline: none;
     display: flex;

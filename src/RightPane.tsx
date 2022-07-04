@@ -236,16 +236,29 @@ function PlayerInfoPane(props: { players: Player[] }) {
   )
 }
 
-const StyledRightPane = styled.div`
+const StyledRightPane = styled.div<{ invalid?: boolean }>`
   flex: 1;
   margin-left: 20px;
+  ${props => props.invalid && `
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #ff7f00;
+    font-weight: bold;
+  `}
 `;
 
 export function RightPane(props: Resp) {
   return (
-    <StyledRightPane>
-      <MatchInfoPane {...props} />
-      <PlayerInfoPane players={props.players}/>
+    <StyledRightPane invalid={props.invalid}>
+      {props.invalid
+        ? <ShadowText>录像解析失败</ShadowText>
+        : <>
+          <MatchInfoPane {...props} />
+          <PlayerInfoPane players={props.players}/>
+        </>}
     </StyledRightPane>
   )
 }

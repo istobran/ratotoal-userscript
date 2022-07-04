@@ -10,7 +10,7 @@ import alliedRect from './assets/allied_rect.png';
 import sovietRect from './assets/soviet_rect.png';
 import empireRect from './assets/empire_rect.png';
 import randomRect from './assets/random_rect.png';
-import { ReactNode } from 'react';
+import shenZhouRect from './assets/shenzhou_rect.png';
 import { Loading } from './Loading';
 import { Button } from './Button';
 
@@ -107,6 +107,7 @@ const colorMap = {
   5: "#ff0000", // Red
   6: "#37d1ff", // Cyan
 }
+
 const factionMap = {
   [FactionType.Observer]: observerRect,
   [FactionType.Commentator]: commentatorRect,
@@ -114,13 +115,16 @@ const factionMap = {
   [FactionType.Soviets]: sovietRect,
   [FactionType.Empire]: empireRect,
   [FactionType.Random]: randomRect,
+  [FactionType.Shenzhou]: shenZhouRect // TODO：拆分 mod 阵营
 };
+
 const aiLevelMap = {
   E: '简单',
   M: '中等',
   H: '困难',
   B: '凶残'
 };
+
 const aiNameMap = {
   '2 0': '晋三',
   '2 1': '贤治',
@@ -133,7 +137,7 @@ const aiNameMap = {
   '8 2': '夏娜',
 };
 
-function PlayerItem(props: Player) {
+function PlayerItem(props: Player & { modInfo?: string }) {
   const playerName = props.human
     ? <>{props.clan ? `[${props.clan}]` : ''}{props.name}</>
     : <>{aiLevelMap[props.name]} {aiNameMap[`${props.faction} ${props.mode}`] || '随机'}</>
@@ -216,7 +220,7 @@ function Checkbox(props: { checked?: boolean }) {
   )
 }
 
-function PlayerInfoPane(props: { players: Player[] }) {
+function PlayerInfoPane(props: { players: Player[], modInfo?: string }) {
   return (
     <StyledPlayerInfoPane>
       <table>
@@ -233,7 +237,10 @@ function PlayerInfoPane(props: { players: Player[] }) {
         <tbody>
         {(props.players || [])
           .filter(p => !(p.name === 'post Commentator' && p.apm === null))
-          .map((player, index) => <PlayerItem key={index} {...player} />)}
+          .map((player, index) => <PlayerItem
+            key={index}
+            {...player}
+            modInfo={props.modInfo} />)}
         </tbody>
       </table>
     </StyledPlayerInfoPane>
@@ -281,7 +288,9 @@ export function RightPane(props: Resp & {
       </div>}
       {!full && <>
         <MatchInfoPane {...props} />
-        <PlayerInfoPane players={props.players} />
+        <PlayerInfoPane
+          modInfo={props.modInfo}
+          players={props.players} />
       </>}
     </StyledRightPane>
   )

@@ -46,7 +46,6 @@ const ActionContainer = styled.div`
 `;
 
 export function LeftPane(props: LeftPaneProps) {
-  // TODO：评分
   const hasException = props.loading || props.failed;
   return (
     <Border color="#bc0d00" width="2px">

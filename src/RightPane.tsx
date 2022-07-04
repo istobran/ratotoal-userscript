@@ -12,6 +12,7 @@ import empireRect from './assets/empire_rect.png';
 import randomRect from './assets/random_rect.png';
 import { ReactNode } from 'react';
 import { Loading } from './Loading';
+import { Button } from './Button';
 
 enum FactionType {
   Observer = 1,
@@ -251,21 +252,34 @@ const StyledRightPane = styled.div<{ full?: boolean }>`
     color: #ff7f00;
     font-weight: bold;
   `}
+  .retry {
+    margin-top: 30px;
+    button {
+      margin: 0 auto;
+    }
+  }
 `;
 
-export function RightPane(props: Resp & { loading?: boolean }) {
-  let displayContent: ReactNode;
-  if (props.loading) {
-    displayContent = <Loading loading={props.loading} />
-  } else if (props.invalid) {
-    displayContent = <ShadowText>录像解析失败</ShadowText>
-  } else {
-    displayContent = <>
-      <MatchInfoPane {...props} />
-      <PlayerInfoPane players={props.players} />
-    </>
-  }
+export function RightPane(props: Resp & {
+  loading?: boolean,
+  failed?: string,
+  onRetry?: () => void
+}) {
+  const full = props.invalid || props.loading || Boolean(props.failed);
   return (
-    <StyledRightPane full={props.invalid || props.loading}>{displayContent}</StyledRightPane>
+    <StyledRightPane full={full}>
+      {props.loading && <Loading loading={props.loading} />}
+      {props.invalid && <ShadowText>录像损坏，无法解析</ShadowText>}
+      {props.failed && <div>
+        <div><ShadowText>未能获取录像信息，请稍候再试</ShadowText></div>
+        <div className="retry">
+          <Button onClick={props.onRetry}>重试</Button>
+        </div>
+      </div>}
+      {!full && <>
+        <MatchInfoPane {...props} />
+        <PlayerInfoPane players={props.players} />
+      </>}
+    </StyledRightPane>
   )
 }

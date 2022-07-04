@@ -1,10 +1,8 @@
 import { Border } from './Background';
 import * as React from 'react';
 import styled from '@emotion/styled';
-import buttonInactive from './assets/button_inactive.png';
-import buttonHover from './assets/button_hover.png';
-import buttonActive from './assets/button_active.png';
 import { ShadowText } from './ShadowText';
+import { Button } from './Button';
 
 const LeftInfoContainer = styled.div`
   background-color: #000000;
@@ -30,6 +28,7 @@ type LeftPaneProps = {
   imageUrl: string;
   downloadUrl: string;
   loading?: boolean;
+  failed?: string;
 }
 const MapName = styled.div`
   color: #f4b162;
@@ -44,29 +43,6 @@ const ActionContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-const Button = styled.button`
-  border: none;
-  background: url(${buttonInactive});
-  width: 165px;
-  height: 55px;
-  display: block;
-  color: #ff7f00;
-  font-weight: bolder;
-  font-size: 30px;
-  cursor: pointer;
-  &:hover, &:active {
-    color: #ffffc3;
-  }
-  &:hover {
-    background: url(${buttonHover});
-  }
-  &:active {
-    background: url(${buttonActive});
-  }
-  &:focus {
-    outline: none;
-  }
-`;
 
 export function LeftPane(props: LeftPaneProps) {
   // TODO：处理地图预览图
@@ -80,7 +56,11 @@ export function LeftPane(props: LeftPaneProps) {
               className="img-content"
               src={props.imageUrl}
               alt={props.mapName} />
-            : <div className="img-content">{props.loading ? '正在加载...' : '暂无地图预览图'}</div>}
+            : <div className="img-content">
+              {props.loading && '正在加载...'}
+              {props.failed && '无地图信息'}
+              {!props.loading && !props.failed && '暂无地图预览图'}
+            </div>}
           {props.mapName && <MapName>{props.mapName}</MapName>}
         </Border>
         <ActionContainer>

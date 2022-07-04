@@ -10,6 +10,7 @@ import { terser } from 'rollup-plugin-terser';
 
 const fs = require('fs')
 const pkg = require('./package.json')
+const isProduction = process.env.NODE_ENV === 'production';
 
 fs.mkdir('dist/', { recursive: true }, () => null)
 
@@ -48,7 +49,7 @@ export default {
       extensions: ['.js', '.ts', '.jsx', '.tsx'],
       plugins: ['@emotion']
     }),
-    terser({ format: { comments: false } }),
+    isProduction && terser({ format: { comments: false } }),
     metablock({
       file: './meta.json',
       override: {

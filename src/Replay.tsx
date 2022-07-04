@@ -8,6 +8,7 @@ import { ThreadAttachment } from './AttachmentPanel';
 import { jsonRequest } from './utils/request';
 import { LeftPane } from './LeftPane';
 import { RightPane } from './RightPane';
+import { useToggle } from 'react-use';
 
 export function ReplayBackground(props: { children?: ReactNode }) {
   return (
@@ -96,12 +97,15 @@ export function Replay(props: ThreadAttachment) {
   const pureFilename = props.filename.replace(/\.ra3replay$/i, '');
   const [data, setData] = useState<Resp>(null);
   const [loading, setLoading] = useState(false);
+  const [failed, setFailed] = useState('');
+  const [refreshFlag, refresh] = useToggle(false);
   useEffect(() => {
+    setFailed('');
     setLoading(true);
     jsonRequest('find/replay/by_ratotal_aid', { aid: props.aid })
-      .then(resp => setData(resp))
+      .then(resp => setData(resp), (err) => setFailed(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [refreshFlag]);
   return (
     <StyledReplay>
       <Title>{pureFilename}（{props.filesize}）</Title>
@@ -114,8 +118,15 @@ export function Replay(props: ThreadAttachment) {
                 start="rgba(172, 20, 24, .69)"
                 end="rgba(0, 0, 0, .69)"
                 direction="top right">
-                <LeftPane {...data} loading={loading} />
-                <RightPane {...data} loading={loading} />
+                <LeftPane
+                  {...data}
+                  loading={loading}
+                  failed={failed} />
+                <RightPane
+                  {...data}
+                  loading={loading}
+                  failed={failed}
+                  onRetry={() => refresh()} />
               </LinearBackground>
             </Border>
           </Border>

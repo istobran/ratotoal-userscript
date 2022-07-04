@@ -6,13 +6,13 @@ import typescriptPlugin from '@rollup/plugin-typescript'
 import image from '@rollup/plugin-image';
 import typescript from 'typescript'
 import metablock from 'rollup-plugin-userscript-metablock'
+import { terser } from 'rollup-plugin-terser';
 
 const fs = require('fs')
 const pkg = require('./package.json')
 
 fs.mkdir('dist/', { recursive: true }, () => null)
 
-// TODO：terser 最小化
 export default {
   input: 'src/index.tsx',
   output: {
@@ -45,8 +45,10 @@ export default {
     }),
     babel({
       babelHelpers: 'bundled',
+      extensions: ['.js', '.ts', '.jsx', '.tsx'],
       plugins: ['@emotion']
     }),
+    terser({ format: { comments: false } }),
     metablock({
       file: './meta.json',
       override: {
@@ -57,7 +59,7 @@ export default {
         author: pkg.author,
         license: pkg.license
       }
-    })
+    }),
   ],
   external: id => /^react(-dom)?$/.test(id)
 }

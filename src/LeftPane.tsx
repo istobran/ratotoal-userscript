@@ -80,7 +80,7 @@ export function LeftPane(props: LeftPaneProps) {
               src={props.imageUrl}
               alt={props.mapName}/>
             : <div className="img-content">暂无地图预览图</div>}
-          <MapName>{props.mapName}</MapName>
+          {props.mapName && <MapName>{props.mapName}</MapName>}
         </Border>
         <ActionContainer>
           <Button onClick={() => {

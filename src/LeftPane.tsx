@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { ShadowText } from './ShadowText';
 import { Button } from './Button';
+import unknownMap from './assets/unknown_map.png';
 
 const LeftInfoContainer = styled.div`
   background-color: #000000;
@@ -45,22 +46,21 @@ const ActionContainer = styled.div`
 `;
 
 export function LeftPane(props: LeftPaneProps) {
-  // TODO：处理地图预览图
   // TODO：评分
+  const hasException = props.loading || props.failed;
   return (
     <Border color="#bc0d00" width="2px">
       <LeftInfoContainer>
         <Border color="#f4b162" width="2px" className="wrapper">
-          {props.imageUrl
-            ? <img
-              className="img-content"
-              src={props.imageUrl}
-              alt={props.mapName} />
-            : <div className="img-content">
+          {hasException
+            ? <div className="img-content">
               {props.loading && '正在加载...'}
               {props.failed && '无地图信息'}
-              {!props.loading && !props.failed && '暂无地图预览图'}
-            </div>}
+            </div>
+            : <img
+              className="img-content"
+              src={props.imageUrl || unknownMap}
+              alt={props.mapName} />}
           {props.mapName && <MapName>{props.mapName}</MapName>}
         </Border>
         <ActionContainer>

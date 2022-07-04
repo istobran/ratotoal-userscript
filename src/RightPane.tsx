@@ -258,6 +258,9 @@ const StyledRightPane = styled.div<{ full?: boolean }>`
       margin: 0 auto;
     }
   }
+  .error-text {
+    font-size: 24px;
+  }
 `;
 
 export function RightPane(props: Resp & {
@@ -271,7 +274,7 @@ export function RightPane(props: Resp & {
       {props.loading && <Loading loading={props.loading} />}
       {props.invalid && <ShadowText>录像损坏，无法解析</ShadowText>}
       {props.failed && <div>
-        <div><ShadowText>未能获取录像信息，请稍候再试</ShadowText></div>
+        <div className="error-text"><ShadowText>未能获取录像信息，请稍候再试</ShadowText></div>
         <div className="retry">
           <Button onClick={props.onRetry}>重试</Button>
         </div>

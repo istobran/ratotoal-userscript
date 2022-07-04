@@ -12,6 +12,7 @@ const pkg = require('./package.json')
 
 fs.mkdir('dist/', { recursive: true }, () => null)
 
+// TODO：terser 最小化
 export default {
   input: 'src/index.tsx',
   output: {

@@ -2,8 +2,8 @@
     "namespace": "github.com/istobran",
     "copyright": "2022, BangZ (https://openuserjs.org/users/BangZ)",
     "require": [
-        "https://unpkg.com/react@18/umd/react.development.js",
-        "https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        "https://cdn.staticfile.org/react/18.2.0/umd/react.production.min.js",
+        "https://cdn.staticfile.org/react-dom/18.2.0/umd/react-dom.production.min.js"
     ],
     "include": [
         "https://github.com/*"

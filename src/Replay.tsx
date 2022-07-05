@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 import { Border, LinearBackground } from './Background';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import banner from './assets/banner.png';
 import sunlight from './assets/sunlight.png';
 import { ThreadAttachment } from './AttachmentPanel';
 import { jsonRequest } from './utils/request';
 import { LeftPane } from './LeftPane';
 import { RightPane } from './RightPane';
-import { useToggle } from 'react-use';
+import { useAsync, useToggle } from 'react-use';
 
 const Title = styled.div`
   background: url(${banner}) no-repeat left center;
@@ -84,19 +84,36 @@ export type Resp = {
   vsType: string,
 }
 
-export function Replay(props: ThreadAttachment) {
-  const pureFilename = props.filename.replace(/\.ra3replay$/i, '');
-  const [data, setData] = useState<Resp>(null);
+function useRequest<T = any>(url: string, body: Record<string, any>) {
+  const [data, setData] = useState<T>(null);
   const [loading, setLoading] = useState(false);
   const [failed, setFailed] = useState('');
   const [refreshFlag, refresh] = useToggle(false);
-  useEffect(() => {
+  useAsync(async () => {
     setFailed('');
     setLoading(true);
-    jsonRequest('find/replay/by_ratotal_aid', { aid: props.aid })
-      .then(resp => setData(resp), (err) => setFailed(err.message))
-      .finally(() => setLoading(false));
+    try {
+      const resp = await jsonRequest('find/replay/by_ratotal_aid', body);
+      setData(resp);
+    } catch (err) {
+      setFailed(err.message)
+    } finally {
+      setLoading(false)
+    }
   }, [refreshFlag]);
+  return [data, loading, failed, refresh] as const;
+}
+
+export function Replay(props: ThreadAttachment) {
+  const [data, loading, failed, refresh] = useRequest<Resp>('find/replay/by_ratotal_aid', {
+    aid: props.aid,
+    filename: props.filename,
+    downloadUrl: props.downloadUrl,
+    source: 1,
+    sourceUrl: window.location.href,
+    sourceTitle: window.document.title,
+  });
+  const pureFilename = props.filename.replace(/\.ra3replay$/i, '');
   return (
     <StyledReplay>
       <Title>{pureFilename}（{props.filesize}）</Title>

@@ -10,6 +10,7 @@ export interface ThreadAttachment {
   filename: string;
   filesize: string;
   downloadTimes: number;
+  downloadUrl: string;
 }
 
 type Props = {

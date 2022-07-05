@@ -16,7 +16,8 @@ Array.from(attachlists).forEach(attachListNode => {
       const ext = (last(filename.split('.')) || '').toLowerCase();
       const [, filesize, downloadTimes] = /大小：(.*?)，下载次数：(.*?)\)/gi
         .exec(liNode.querySelector('span')?.innerText.trim());
-      return { aid, filename, filesize, downloadTimes: Number(downloadTimes), ext };
+      const downloadUrl = liNode.querySelector('a')?.getAttribute('href');
+      return { aid, filename, filesize, downloadTimes: Number(downloadTimes), ext, downloadUrl };
     })
     .filter(a => a.ext === 'ra3replay');
   if (originalData.length === liNodes.length) { // 说明附件全是录像，所有附件统统删光

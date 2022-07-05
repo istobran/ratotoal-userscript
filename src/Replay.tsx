@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
 import { Border, LinearBackground } from './Background';
 import * as React from 'react';
-import { useState } from 'react';
 import banner from './assets/banner.png';
 import sunlight from './assets/sunlight.png';
 import { ThreadAttachment } from './AttachmentPanel';
-import { jsonRequest } from './utils/request';
 import { LeftPane } from './LeftPane';
 import { RightPane } from './RightPane';
-import { useAsync, useToggle } from 'react-use';
+import { useRequest } from './utils/hooks';
 
 const Title = styled.div`
   background: url(${banner}) no-repeat left center;
@@ -82,26 +80,6 @@ export type Resp = {
   sourceUrl: string,
   tapeDelay: number,
   vsType: string,
-}
-
-function useRequest<T = any>(url: string, body: Record<string, any>) {
-  const [data, setData] = useState<T>(null);
-  const [loading, setLoading] = useState(false);
-  const [failed, setFailed] = useState('');
-  const [refreshFlag, refresh] = useToggle(false);
-  useAsync(async () => {
-    setFailed('');
-    setLoading(true);
-    try {
-      const resp = await jsonRequest('find/replay/by_ratotal_aid', body);
-      setData(resp);
-    } catch (err) {
-      setFailed(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }, [refreshFlag]);
-  return [data, loading, failed, refresh] as const;
 }
 
 export function Replay(props: ThreadAttachment) {

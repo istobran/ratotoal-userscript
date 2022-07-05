@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useInterval } from 'react-use';
 import starLight from './assets/star_light.png';
 import starDark from './assets/star_dark.png';

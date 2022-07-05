@@ -1,4 +1,5 @@
-const baseUrl = 'http://localhost:12888/'
+// const baseUrl = 'http://localhost:12888/'
+const baseUrl = 'https://api.bangz.me/ra3/';
 
 export async function jsonRequest<T = any>(url: string, data?: any) {
   const resp = await fetch(`${baseUrl}${url}`, {

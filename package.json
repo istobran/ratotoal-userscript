@@ -1,7 +1,7 @@
 {
     "name": "ratotal-userscript",
     "version": "0.0.0",
-    "description": "Bundle typescript, react and JSX/TSX script files into a single userscript file with rollup",
+    "description": "greasemonkey userscript for ratotal forum",
     "keywords": [
         "userscript",
         "greasemonkey",
@@ -10,14 +10,13 @@
         "typescript",
         "react"
     ],
-    "homepage": "https://github.com/cvzi/rollup-userscript-template",
-    "funding": "https://github.com/cvzi/rollup-userscript-template/funding_links?fragment=1",
+    "homepage": "https://github.com/istobran/ratotal-userscript",
     "repository": {
         "type": "git",
-        "url": "github:cvzi/rollup-userscript-template"
+        "url": "github:istobran/ratotal-userscript"
     },
     "bugs": {
-        "url": "https://github.com/cvzi/rollup-userscript-template/issues",
+        "url": "https://github.com/istobran/ratotal-userscript/issues",
         "email": "i@bangz.me"
     },
     "author": "BangZ",

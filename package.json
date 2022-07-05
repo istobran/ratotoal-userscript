@@ -1,7 +1,7 @@
 {
     "name": "ratotal-userscript",
     "version": "0.0.0",
-    "description": "greasemonkey userscript for ratotal forum",
+    "description": "RAT社区增强脚本，支持录像解析",
     "keywords": [
         "userscript",
         "greasemonkey",

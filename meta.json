@@ -7,7 +7,5 @@
     ],
     "match": [
         "https://ratotal.org/*"
-    ],
-    "include": [],
-    "grant": []
+    ]
 }
